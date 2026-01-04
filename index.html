@@ -4,682 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virginia's 24th Birthday</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #000;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* GLITTER PARTICLES BACKGROUND */
-        .glitter-particles {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .glitter-particles::before,
-        .glitter-particles::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle, white 1px, transparent 1px),
-                radial-gradient(circle, silver 1px, transparent 1px),
-                radial-gradient(circle, white 0.5px, transparent 0.5px);
-            background-size: 100px 100px, 150px 150px, 200px 200px;
-            background-position: 0 0, 50px 50px, 100px 100px;
-            opacity: 0.3;
-            animation: sparkle 8s linear infinite;
-        }
-
-        .glitter-particles::after {
-            animation-delay: 4s;
-        }
-
-        @keyframes sparkle {
-            0%, 100% { 
-                opacity: 0.2;
-                transform: scale(1);
-            }
-            50% { 
-                opacity: 0.4;
-                transform: scale(1.1);
-            }
-        }
-
-        /* PASSWORD SCREEN */
-        #password-screen {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-            z-index: 1000;
-        }
-
-        #password-screen.hidden {
-            display: none;
-        }
-
-        .password-container {
-            text-align: center;
-            z-index: 10;
-        }
-
-        .password-container h2 {
-            font-size: 1.5rem;
-            font-weight: 300;
-            letter-spacing: 0.3em;
-            margin-bottom: 2rem;
-        }
-
-        .password-container input {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            padding: 1rem 1.5rem;
-            font-size: 1rem;
-            letter-spacing: 0.2em;
-            text-align: center;
-            width: 16rem;
-            transition: border 0.3s;
-        }
-
-        .password-container input:focus {
-            outline: none;
-            border-color: #FFB6C1;
-        }
-
-        .password-container button {
-            display: block;
-            margin: 1.5rem auto 0;
-            padding: 0.8rem 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            letter-spacing: 0.2em;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .password-container button:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .error-message {
-            color: #ff6b6b;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .error-message.show {
-            opacity: 1;
-        }
-
-        /* MAIN CONTENT */
-        #main-content {
-            display: none;
-            position: relative;
-            z-index: 2;
-        }
-
-        #main-content.visible {
-            display: block;
-        }
-
-        /* MUSIC CONTROL */
-        .music-control {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 100;
-            width: 3rem;
-            height: 3rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .music-control:hover {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 20px rgba(255, 182, 193, 0.3);
-        }
-
-        .music-control svg {
-            width: 1.2rem;
-            height: 1.2rem;
-        }
-
-        /* SECTIONS */
-        section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            position: relative;
-        }
-
-        /* SECTION 1: WELCOME */
-        .welcome-section {
-            text-align: center;
-        }
-
-        .welcome-section h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 300;
-            letter-spacing: 0.1em;
-            animation: fadeIn 1s ease-out;
-        }
-
-        .holographic-bg {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, 
-                rgba(255, 182, 193, 0.15) 0%,
-                rgba(192, 192, 192, 0.15) 25%,
-                rgba(173, 216, 230, 0.15) 50%,
-                rgba(192, 192, 192, 0.15) 75%,
-                rgba(255, 182, 193, 0.15) 100%);
-            background-size: 400% 400%;
-            animation: holographicShift 8s ease infinite;
-            opacity: 0.3;
-        }
-
-        @keyframes holographicShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* SECTION 2 & 3: NAME AND AGE */
-        .name-section {
-            min-height: 60vh;
-            flex-direction: column;
-        }
-
-        .name-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(4rem, 12vw, 8rem);
-            font-weight: 400;
-            text-shadow: 0 0 30px rgba(255, 182, 193, 0.5);
-            animation: slideUp 1s ease-out;
-            margin-bottom: 1rem;
-        }
-
-        .holographic-text {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 700;
-            background: linear-gradient(90deg, 
-                #FFB6C1 0%,
-                #ffffff 20%,
-                #C0C0C0 40%,
-                #ADD8E6 60%,
-                #C0C0C0 80%,
-                #FFB6C1 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: slideUp 1s ease-out 0.2s both, shimmer 3s linear infinite;
-            filter: drop-shadow(0 0 20px rgba(255, 182, 193, 0.5));
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-
-        /* SECTION 4: PHOTO CAROUSEL */
-        .carousel-section {
-            padding: 5rem 2rem;
-        }
-
-        .carousel-container {
-            max-width: 50rem;
-            width: 100%;
-            position: relative;
-        }
-
-        .carousel-image-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 0.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .carousel-image-container::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(45deg,
-                #FFB6C1,
-                #C0C0C0,
-                #ADD8E6,
-                #C0C0C0,
-                #FFB6C1);
-            background-size: 400% 400%;
-            animation: holographicBorder 4s ease infinite;
-            opacity: 0;
-            transition: opacity 0.5s;
-            z-index: -1;
-            border-radius: 0.5rem;
-        }
-
-        .carousel-image-container:hover::before {
-            opacity: 0.6;
-        }
-
-        .carousel-image-container::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg,
-                rgba(255, 182, 193, 0.3) 0%,
-                transparent 30%,
-                transparent 70%,
-                rgba(173, 216, 230, 0.3) 100%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-
-        .carousel-image-container:hover::after {
-            opacity: 1;
-        }
-
-        @keyframes holographicBorder {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .carousel-image-container:hover {
-            transform: translateY(-8px);
-            transition: transform 0.4s ease;
-        }
-
-        .carousel-image {
-            width: 100%;
-            height: 24rem;
-            object-fit: cover;
-            display: block;
-        }
-
-        @media (min-width: 768px) {
-            .carousel-image {
-                height: 37.5rem;
-            }
-        }
-
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 2;
-        }
-
-        .carousel-button:hover {
-            background: rgba(255, 182, 193, 0.3);
-            border-color: rgba(255, 182, 193, 0.5);
-            box-shadow: 0 0 20px rgba(255, 182, 193, 0.4);
-        }
-
-        .carousel-button.prev {
-            left: 1rem;
-        }
-
-        .carousel-button.next {
-            right: 1rem;
-        }
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .carousel-dot {
-            width: 0.5rem;
-            height: 0.5rem;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .carousel-dot.active {
-            background: #FFB6C1;
-            width: 2rem;
-            box-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
-        }
-
-        /* SECTION 5: EVENT DETAILS */
-        .event-section {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .event-section h3 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 300;
-            letter-spacing: 0.1em;
-            margin-bottom: 3rem;
-        }
-
-        .event-details {
-            max-width: 48rem;
-        }
-
-        .event-details p {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .venue-info {
-            padding: 2rem 0;
-        }
-
-        .venue-info .venue-name {
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 0.5rem;
-        }
-
-        .venue-info .venue-address {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 1.5rem;
-        }
-
-        .map-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.3s;
-            border-radius: 0.25rem;
-        }
-
-        .map-button:hover {
-            background: rgba(255, 182, 193, 0.2);
-            border-color: rgba(255, 182, 193, 0.5);
-            box-shadow: 0 0 20px rgba(255, 182, 193, 0.3);
-        }
-
-        .consumption-note {
-            margin-top: 2rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-style: italic;
-        }
-
-        /* SECTION 6: DRESS CODE */
-        .dresscode-section {
-            flex-direction: column;
-        }
-
-        .dresscode-section h3 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 300;
-            letter-spacing: 0.1em;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .dresscode-text {
-            font-size: 2rem;
-            letter-spacing: 0.3em;
-            text-align: center;
-            margin-bottom: 3rem;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .dresscode-gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            max-width: 48rem;
-        }
-
-        .dresscode-image-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 0.5rem;
-            transition: transform 0.3s;
-        }
-
-        .dresscode-image-container::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(45deg,
-                #FFB6C1,
-                #C0C0C0,
-                #ADD8E6,
-                #C0C0C0,
-                #FFB6C1);
-            background-size: 400% 400%;
-            animation: holographicBorder 4s ease infinite;
-            opacity: 0;
-            transition: opacity 0.5s;
-            z-index: -1;
-            border-radius: 0.5rem;
-        }
-
-        .dresscode-image-container:hover::before {
-            opacity: 0.5;
-        }
-
-        .dresscode-image-container:hover {
-            transform: scale(1.05);
-        }
-
-        .dresscode-image {
-            width: 100%;
-            height: 12rem;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* SECTION 7: RSVP */
-        .rsvp-section {
-            flex-direction: column;
-        }
-
-        .rsvp-section h3 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 300;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .whatsapp-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: rgba(255, 182, 193, 0.2);
-            border: 2px solid #FFB6C1;
-            border-radius: 3rem;
-            color: #fff;
-            font-size: 1.25rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            animation: pulseSlow 3s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(255, 182, 193, 0.3);
-        }
-
-        .whatsapp-button:hover {
-            background: rgba(255, 182, 193, 0.4);
-            box-shadow: 0 0 40px rgba(255, 182, 193, 0.6);
-            transform: scale(1.05);
-        }
-
-        @keyframes pulseSlow {
-            0%, 100% { 
-                opacity: 1;
-                box-shadow: 0 0 20px rgba(255, 182, 193, 0.3);
-            }
-            50% { 
-                opacity: 0.8;
-                box-shadow: 0 0 30px rgba(255, 182, 193, 0.5);
-            }
-        }
-
-        /* SECTION 8: COUNTDOWN */
-        .countdown-section {
-            flex-direction: column;
-        }
-
-        .countdown-section h3 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 300;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .countdown-container {
-            display: flex;
-            gap: 3rem;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+        
+        .glitter-particles { position: fixed; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .glitter-particles::before, .glitter-particles::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background-image: radial-gradient(circle, white 1px, transparent 1px), radial-gradient(circle, silver 1px, transparent 1px);
+            background-size: 100px 100px, 150px 150px; opacity: 0.3; animation: sparkle 8s linear infinite;
+        }
+        .glitter-particles::after { animation-delay: 4s; }
+        @keyframes sparkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.4; } }
+        
+        #password-screen { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #000; z-index: 1000; }
+        #password-screen.hidden { display: none; }
+        .password-container { text-align: center; z-index: 10; }
+        .password-container h2 { font-size: 1.5rem; font-weight: 300; letter-spacing: 0.3em; margin-bottom: 2rem; }
+        .password-container input { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 1rem 1.5rem; font-size: 1rem; letter-spacing: 0.2em; text-align: center; width: 20rem; transition: border 0.3s; }
+        .password-container input:focus { outline: none; border-color: #FFB6C1; }
+        .password-container button { display: block; margin: 1.5rem auto 0; padding: 0.8rem 2rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s; }
+        .password-container button:hover { background: rgba(255,255,255,0.2); }
+        .error-message { color: #ff6b6b; margin-top: 1rem; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; }
+        .error-message.show { opacity: 1; }
+        
+        #main-content { display: none; position: relative; z-index: 2; }
+        #main-content.visible { display: block; }
+        
+        .music-control { position: fixed; top: 2rem; right: 2rem; z-index: 100; width: 3rem; height: 3rem; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
+        .music-control:hover { background: rgba(255,255,255,0.2); box-shadow: 0 0 20px rgba(255,182,193,0.3); }
+        .music-control svg { width: 1.2rem; height: 1.2rem; }
+        
+        section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; position: relative; }
+        
+        .welcome-section { text-align: center; flex-direction: column; gap: 1rem; }
+        .welcome-section .greeting { font-size: clamp(3rem, 8vw, 5rem); font-weight: 300; letter-spacing: 0.1em; animation: fadeIn 1s ease-out; }
+        .welcome-section .invitation { font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 300; letter-spacing: 0.05em; animation: fadeIn 1s ease-out 0.3s both; }
+        .holographic-bg { position: absolute; inset: 0; background: linear-gradient(45deg, rgba(255,182,193,0.15) 0%, rgba(192,192,192,0.15) 25%, rgba(173,216,230,0.15) 50%, rgba(192,192,192,0.15) 75%, rgba(255,182,193,0.15) 100%); background-size: 400% 400%; animation: holographicShift 8s ease infinite; opacity: 0.3; }
+        @keyframes holographicShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .name-section { min-height: 60vh; flex-direction: column; }
+        .name-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(4rem, 12vw, 8rem); font-weight: 400; text-shadow: 0 0 30px rgba(255,182,193,0.5); animation: slideUp 1s ease-out; margin-bottom: 1rem; }
+        .holographic-text { font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; background: linear-gradient(90deg, #FFB6C1 0%, #ffffff 20%, #C0C0C0 40%, #ADD8E6 60%, #C0C0C0 80%, #FFB6C1 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: slideUp 1s ease-out 0.2s both, shimmer 3s linear infinite; filter: drop-shadow(0 0 20px rgba(255,182,193,0.5)); }
+        @keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+        
+        .carousel-section { padding: 5rem 2rem; }
+        .carousel-container { max-width: 50rem; width: 100%; position: relative; }
+        .carousel-image-container { position: relative; overflow: hidden; border-radius: 0.5rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .carousel-image-container::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(45deg, #FFB6C1, #C0C0C0, #ADD8E6, #C0C0C0, #FFB6C1); background-size: 400% 400%; animation: holographicBorder 4s ease infinite; opacity: 0; transition: opacity 0.5s; z-index: -1; border-radius: 0.5rem; }
+        .carousel-image-container:hover::before { opacity: 0.6; }
+        .carousel-image-container::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,182,193,0.3) 0%, transparent 30%, transparent 70%, rgba(173,216,230,0.3) 100%); opacity: 0; transition: opacity 0.5s; pointer-events: none; }
+        .carousel-image-container:hover::after { opacity: 1; }
+        @keyframes holographicBorder { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .carousel-image-container:hover { transform: translateY(-8px); transition: transform 0.4s ease; }
+        .carousel-image { width: 100%; height: 24rem; object-fit: cover; display: block; transition: opacity 0.5s ease; }
+        @media (min-width: 768px) { .carousel-image { height: 37.5rem; } }
+        
+        .carousel-button { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 2; }
+        .carousel-button:hover { background: rgba(255,182,193,0.3); border-color: rgba(255,182,193,0.5); box-shadow: 0 0 20px rgba(255,182,193,0.4); }
+        .carousel-button.prev { left: 1rem; }
+        .carousel-button.next { right: 1rem; }
+        .carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .carousel-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s; }
+        .carousel-dot.active { background: #FFB6C1; width: 2rem; box-shadow: 0 0 10px rgba(255,182,193,0.5); }
+        
+        .event-section { flex-direction: column; text-align: center; }
+        .event-section h3 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 300; letter-spacing: 0.1em; margin-bottom: 3rem; }
+        .event-details { max-width: 48rem; }
+        .event-details p { font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .venue-info { padding: 2rem 0; }
+        .venue-info .venue-name { font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; }
+        .venue-info .venue-address { color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+        .map-button { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; text-decoration: none; transition: all 0.3s; border-radius: 0.25rem; }
+        .map-button:hover { background: rgba(255,182,193,0.2); border-color: rgba(255,182,193,0.5); box-shadow: 0 0 20px rgba(255,182,193,0.3); }
+        
+        .catering-section { margin-top: 3rem; padding: 2rem; background: rgba(255,255,255,0.03); border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1); text-align: left; max-width: 40rem; }
+        .catering-section h4 { font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .catering-section p { font-size: 1rem; line-height: 1.6; margin-bottom: 0.5rem; color: rgba(255,255,255,0.9); }
+        .catering-section .small-text { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+        .bar-libre { background: linear-gradient(135deg, rgba(255,182,193,0.15), rgba(173,216,230,0.15)); padding: 1rem; border-radius: 0.5rem; margin: 1.5rem 0; border: 1px solid rgba(255,182,193,0.3); }
+        .bar-libre h4 { font-size: 1.8rem; color: #FFB6C1; text-shadow: 0 0 10px rgba(255,182,193,0.5); }
+        .bar-libre .horario { font-size: 1.2rem; font-weight: 600; color: #fff; margin-top: 0.5rem; }
+        .precio-section { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2); }
+        .precio-section h5 { font-size: 1.3rem; margin-bottom: 1rem; color: #FFB6C1; }
+        .precio-section p { font-size: 1.1rem; }
+        
+        .dresscode-section { flex-direction: column; }
+        .dresscode-section h3 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 300; letter-spacing: 0.1em; margin-bottom: 3rem; text-align: center; }
+        .dresscode-text { font-size: 2rem; letter-spacing: 0.3em; text-align: center; margin-bottom: 3rem; text-shadow: 0 0 20px rgba(255,255,255,0.3); }
+        .dresscode-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 48rem; }
+        .dresscode-image-container { position: relative; overflow: hidden; border-radius: 0.5rem; transition: transform 0.3s; }
+        .dresscode-image-container::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(45deg, #FFB6C1, #C0C0C0, #ADD8E6, #C0C0C0, #FFB6C1); background-size: 400% 400%; animation: holographicBorder 4s ease infinite; opacity: 0; transition: opacity 0.5s; z-index: -1; border-radius: 0.5rem; }
+        .dresscode-image-container:hover::before { opacity: 0.5; }
+        .dresscode-image-container:hover { transform: scale(1.05); }
+        .dresscode-image { width: 100%; height: 12rem; object-fit: cover; display: block; }
+        
+        .rsvp-section { flex-direction: column; }
+        .rsvp-section h3 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; margin-bottom: 2rem; text-align: center; }
+        .whatsapp-button { display: inline-block; padding: 1rem 2.5rem; background: rgba(255,182,193,0.2); border: 2px solid #FFB6C1; border-radius: 3rem; color: #fff; font-size: 1.25rem; text-decoration: none; transition: all 0.3s; animation: pulseSlow 3s ease-in-out infinite; box-shadow: 0 0 20px rgba(255,182,193,0.3); }
+        .whatsapp-button:hover { background: rgba(255,182,193,0.4); box-shadow: 0 0 40px rgba(255,182,193,0.6); transform: scale(1.05); }
+        @keyframes pulseSlow { 0%, 100% { opacity: 1; box-shadow: 0 0 20px rgba(255,182,193,0.3); } 50% { opacity: 0.8; box-shadow: 0 0 30px rgba(255,182,193,0.5); } }
+        
+        .countdown-section { flex-direction: column; }
+        .countdown-section h3 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; margin-bottom: 3rem; text-align: center; }
+        .countdown-container { display: flex; gap: 3rem; }
+        .countdown-item { text-align: center; }
+        .countdown-number { font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 25%, #c0c0c0 50%, #a0a0a0 75%, #808080 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 2px 8px rgba(255,255,255,0.3)); }
+        .countdown-label { font-size: clamp(0.75rem, 2vw, 1rem); color: rgba(255,255,255,0.6); letter-spacing: 0.2em; margin-top: 0.5rem; }
+        
+        .footer-section { flex-direction: column; }
+        .footer-section p { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 300; margin-bottom: 3rem; text-align: center; }
+        .designer-credit { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { opacity: 0; animation: fadeIn 1s ease-out forwards; }
+        
         @media (max-width: 640px) {
-            .countdown-container {
-                gap: 2rem;
-            }
-        }
-
-        .countdown-item {
-            text-align: center;
-        }
-
-        .countdown-number {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 700;
-            background: linear-gradient(180deg, 
-                #ffffff 0%,
-                #e0e0e0 25%,
-                #c0c0c0 50%,
-                #a0a0a0 75%,
-                #808080 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
-        }
-
-        .countdown-label {
-            font-size: clamp(0.75rem, 2vw, 1rem);
-            color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 0.2em;
-            margin-top: 0.5rem;
-        }
-
-        /* SECTION 9: FOOTER */
-        .footer-section {
-            flex-direction: column;
-        }
-
-        .footer-section p {
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            font-weight: 300;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .designer-credit {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* ANIMATIONS */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 1s ease-out forwards;
-        }
-
-        .slide-up {
-            opacity: 0;
-            animation: slideUp 1s ease-out forwards;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 640px) {
-            section {
-                padding: 1rem;
-            }
-
-            .dresscode-gallery {
-                gap: 0.5rem;
-            }
-
-            .dresscode-image {
-                height: 8rem;
-            }
-
-            .music-control {
-                top: 1rem;
-                right: 1rem;
-            }
+            section { padding: 1rem; }
+            .dresscode-gallery { gap: 0.5rem; }
+            .dresscode-image { height: 8rem; }
+            .music-control { top: 1rem; right: 1rem; }
+            .catering-section { padding: 1.5rem; }
+            .countdown-container { gap: 2rem; }
         }
     </style>
 </head>
 <body>
     <div class="glitter-particles"></div>
 
-    <!-- PASSWORD SCREEN -->
     <div id="password-screen">
         <div class="password-container">
             <h2>INGRESÁ LA CONTRASEÑA</h2>
@@ -689,52 +143,38 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div id="main-content">
-        <!-- MUSIC CONTROL -->
-        <div class="music-control" onclick="toggleMusic()" id="music-control">
-            <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            <svg id="pause-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="6" y="4" width="4" height="16"></rect>
-                <rect x="14" y="4" width="4" height="16"></rect>
-            </svg>
+        <div class="music-control" onclick="toggleMusic()">
+            <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <svg id="pause-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
         </div>
 
-        <!-- SECTION 1: WELCOME -->
         <section class="welcome-section">
             <div class="holographic-bg"></div>
-            <h1>Holiiiis, te invito a mi cumple</h1>
+            <div class="greeting">Hoooliiiiis</div>
+            <div class="invitation">te invito a mi cumple</div>
         </section>
 
-        <!-- SECTION 2 & 3: NAME AND AGE -->
         <section class="name-section">
             <h2>VIRGINIA</h2>
             <div class="holographic-text">24</div>
         </section>
 
-        <!-- SECTION 4: PHOTO CAROUSEL -->
         <section class="carousel-section">
             <div class="carousel-container">
                 <div class="carousel-image-container">
-                    <img id="carousel-image" class="carousel-image" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=80" alt="Virginia">
+                    <img id="carousel-image" class="carousel-image" src="https://drive.google.com/uc?export=view&id=12T47xycIcPitybQf4OeaiBH0nu6PTFKD" alt="Virginia">
                 </div>
                 <button class="carousel-button prev" onclick="prevPhoto()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
                 <button class="carousel-button next" onclick="nextPhoto()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
                 <div class="carousel-dots" id="carousel-dots"></div>
             </div>
         </section>
 
-        <!-- SECTION 5: EVENT DETAILS -->
         <section class="event-section">
             <h3>Cena & Boliche</h3>
             <div class="event-details">
@@ -743,44 +183,56 @@
                 <div class="venue-info">
                     <p class="venue-name">Drake Pub & Club</p>
                     <p class="venue-address">Playas del Thompson, Augusto Bravard s/n<br>Paraná, Entre Ríos</p>
-                    <a href="https://maps.google.com/?q=Playas+del+Thompson,+Augusto+Bravard+s/n,+Paraná,+Entre+Ríos" target="_blank" class="map-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
+                    <a href="https://maps.app.goo.gl/qkreNXTTbpJVVGMg9" target="_blank" class="map-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         Cómo llegar
                     </a>
                 </div>
-                <p class="consumption-note">Cada invitado cubre sus consumiciones.</p>
+
+                <div class="catering-section">
+                    <h4>🍴 CATERING</h4>
+                    <p>Papas Drake • Mini burritos • Tacos • Pizzetas • Sándwiches fríos</p>
+                    <p class="small-text">Menú celíaco disponible (avisar antes).</p>
+
+                    <div class="bar-libre">
+                        <h4>🍹 BARRA LIBRE</h4>
+                        <p class="horario">De 22:00 hasta las 00:30</p>
+                        <p>Fernet • Cerveza • Gancia • Gin • Vodka • Sin alcohol</p>
+                        <p style="text-align: center; margin-top: 0.5rem;">✨ Entrada al boliche incluida ✨</p>
+                    </div>
+
+                    <div class="precio-section">
+                        <h5>VALOR POR PERSONA:</h5>
+                        <p>$28.000 (Efectivo)</p>
+                        <p>$32.000 (Transferencia/Digital)</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- SECTION 6: DRESS CODE -->
         <section class="dresscode-section">
             <h3>Dress Code</h3>
             <p class="dresscode-text">TOTAL BLACK</p>
             <div class="dresscode-gallery">
                 <div class="dresscode-image-container">
-                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80" alt="Dress code 1" class="dresscode-image">
+                    <img src="https://drive.google.com/uc?export=view&id=1vf43qBkGUNa9J1t4eajAGclqfButxLIi" alt="Dress code 1" class="dresscode-image">
                 </div>
                 <div class="dresscode-image-container">
-                    <img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=400&q=80" alt="Dress code 2" class="dresscode-image">
+                    <img src="https://drive.google.com/uc?export=view&id=1R_yH6pyHWdMi_R_Lmm8sTVRsNvzUzY4t" alt="Dress code 2" class="dresscode-image">
                 </div>
                 <div class="dresscode-image-container">
-                    <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=400&q=80" alt="Dress code 3" class="dresscode-image">
+                    <img src="https://drive.google.com/uc?export=view&id=1uH6Z0G8mKU3xlaxG7R34sOM2D16UiAcK" alt="Dress code 3" class="dresscode-image">
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 7: RSVP -->
         <section class="rsvp-section">
             <h3>Confirmá tu asistencia</h3>
-            <a href="https://wa.me/5493454097821?text=Hola%20Vir!%20Confirmo%20mi%20asistencia%20a%20tu%20cumple%20🖤✨" target="_blank" class="whatsapp-button">
+            <a href="https://wa.me/5493454097821?text=Hola%20Vir!%20Confirmo%20mi%20asistencia%20a%20tu%20cumple%20%F0%9F%96%A4%E2%9C%A8" target="_blank" class="whatsapp-button">
                 Confirmar por WhatsApp
             </a>
         </section>
 
-        <!-- SECTION 8: COUNTDOWN -->
         <section class="countdown-section">
             <h3>Nos vemos en...</h3>
             <div class="countdown-container">
@@ -799,56 +251,58 @@
             </div>
         </section>
 
-        <!-- SECTION 9: FOOTER -->
         <section class="footer-section">
             <p>Te espero, no faltes!</p>
             <p class="designer-credit">Designed by Valentina Martínez</p>
         </section>
     </div>
 
-    <audio id="background-music" loop>
-        <!-- Aquí deberías poner la URL de tu canción -->
-        <!-- <source src="URL_DE_TU_CANCION.mp3" type="audio/mpeg"> -->
-    </audio>
+    <audio id="background-music" loop></audio>
 
     <script>
-        // PASSWORD CHECK
         function checkPassword() {
             const input = document.getElementById('password-input');
             const errorMsg = document.getElementById('error-message');
+            const passwordValue = input.value.trim().toLowerCase();
             
-            if (input.value === 'Vir10125') {
+            if (passwordValue === 'noteolvideselregalo') {
                 document.getElementById('password-screen').classList.add('hidden');
                 document.getElementById('main-content').classList.add('visible');
-                
-                // Auto-play music after password
-                setTimeout(() => {
-                    const audio = document.getElementById('background-music');
-                    audio.play().then(() => {
-                        document.getElementById('play-icon').style.display = 'none';
-                        document.getElementById('pause-icon').style.display = 'block';
-                    }).catch(() => {
-                        // Autoplay blocked
-                    });
-                }, 500);
+                setTimeout(() => { playRandomSong(); }, 500);
             } else {
                 errorMsg.classList.add('show');
-                setTimeout(() => {
-                    errorMsg.classList.remove('show');
-                }, 2000);
+                setTimeout(() => { errorMsg.classList.remove('show'); }, 2000);
             }
         }
 
-        // Allow Enter key for password
         document.getElementById('password-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkPassword();
-            }
+            if (e.key === 'Enter') { checkPassword(); }
         });
 
-        // MUSIC CONTROL
+        const songs = [
+            'https://drive.google.com/uc?export=download&id=1dXHpZUWSLUfpRjaw4paddrA-rIb_1GGU',
+            'https://drive.google.com/uc?export=download&id=1A8stYV3a4lc6ccatzutPlz4aCmTGAXjh'
+        ];
+        
+        let currentSongIndex = 0;
+        const audio = document.getElementById('background-music');
+        
+        function playRandomSong() {
+            currentSongIndex = Math.floor(Math.random() * songs.length);
+            audio.src = songs[currentSongIndex];
+            audio.play().then(() => {
+                document.getElementById('play-icon').style.display = 'none';
+                document.getElementById('pause-icon').style.display = 'block';
+            }).catch(() => {});
+        }
+        
+        audio.addEventListener('ended', function() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            audio.src = songs[currentSongIndex];
+            audio.play();
+        });
+
         function toggleMusic() {
-            const audio = document.getElementById('background-music');
             const playIcon = document.getElementById('play-icon');
             const pauseIcon = document.getElementById('pause-icon');
             
@@ -863,30 +317,44 @@
             }
         }
 
-        // PHOTO CAROUSEL
         const photos = [
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=80',
-            'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&q=80',
-            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80',
-            'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=80',
-            'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=800&q=80'
+            'https://drive.google.com/uc?export=view&id=12T47xycIcPitybQf4OeaiBH0nu6PTFKD',
+            'https://drive.google.com/uc?export=view&id=16gdg9C58ZC6uiC4syCBg6GCeDDHWEG8N',
+            'https://drive.google.com/uc?export=view&id=1NbPLr4tJY2XZLhbpAJLLccVfDm-I4ajN',
+            'https://drive.google.com/uc?export=view&id=1bvejGAdgEyXUGNfNvSwNJvDshcdDuRQ9',
+            'https://drive.google.com/uc?export=view&id=16-MUUjEZbGdRdcXK7KvTdMHXr3vVAypw',
+            'https://drive.google.com/uc?export=view&id=19nOy9Uovz2c2OJFi2TSM2KHb8PPlprDc',
+            'https://drive.google.com/uc?export=view&id=14ZDTGfuFYwpbn0iAzy2gFz_vNYitKX3p',
+            'https://drive.google.com/uc?export=view&id=14ZDTGfuFYwpbn0iAzy2gFz_vNYitKX3p',
+            'https://drive.google.com/uc?export=view&id=1_p3vyd79tdELj09cTMpQeG5fTOmumYP6',
+            'https://drive.google.com/uc?export=view&id=1RbvG9onIYuSK9aJTc78sKZ-8SlbmwPq1',
+            'https://drive.google.com/uc?export=view&id=1BqJETJ6VtpcZokjUJDRGqJP2VHSfHKkb',
+            'https://drive.google.com/uc?export=view&id=1LIoRrWkPBdX4CYsrkTtQL1LBnlDCMgyH'
         ];
 
         let currentPhoto = 0;
+        let autoplayInterval;
 
         function updateCarousel() {
-            document.getElementById('carousel-image').src = photos[currentPhoto];
+            const img = document.getElementById('carousel-image');
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = photos[currentPhoto];
+                img.style.opacity = '1';
+            }, 250);
             updateDots();
         }
 
         function nextPhoto() {
             currentPhoto = (currentPhoto + 1) % photos.length;
             updateCarousel();
+            resetAutoplay();
         }
 
         function prevPhoto() {
             currentPhoto = (currentPhoto - 1 + photos.length) % photos.length;
             updateCarousel();
+            resetAutoplay();
         }
 
         function createDots() {
@@ -898,6 +366,7 @@
                 dot.onclick = () => {
                     currentPhoto = index;
                     updateCarousel();
+                    resetAutoplay();
                 };
                 dotsContainer.appendChild(dot);
             });
@@ -914,9 +383,20 @@
             });
         }
 
-        createDots();
+        function startAutoplay() {
+            autoplayInterval = setInterval(() => {
+                nextPhoto();
+            }, 4000);
+        }
 
-        // COUNTDOWN TIMER
+        function resetAutoplay() {
+            clearInterval(autoplayInterval);
+            startAutoplay();
+        }
+
+        createDots();
+        startAutoplay();
+
         const eventDate = new Date('2025-01-10T21:30:00').getTime();
 
         function updateCountdown() {
@@ -937,7 +417,6 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // SCROLL ANIMATIONS
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
