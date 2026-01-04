@@ -360,15 +360,20 @@
 
         .carousel-image {
             width: 100%;
-            height: 24rem;
+	    aspect-ratio: 3 / 4; 
+            height: auto;
             object-fit: cover;
             display: block;
             transition: opacity 0.5s ease;
+	    max-height: 90vh;
+	    margin: 0 auto;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 767px) {
             .carousel-image {
-                height: 37.5rem;
+                max-width: 95vw;
+        	aspect-ratio: 3 / 4;
+        	height: auto;
             }
         }
 
@@ -735,6 +740,105 @@
             .catering-section { padding: 1.5rem; }
             .countdown-container { gap: 2rem; }
         }
+	/* Fuentes elegidas */
+	@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@400;700&display=swap');
+
+	.serif, h2, h3, h4, h5 {
+	  font-family: 'Playfair Display', serif !important;
+	}
+	.sans, p, a, li, button, input {
+	  font-family: 'Poppins', sans-serif !important;
+	}
+
+	/* Fecha y hora, recuadro neón */
+	.neon-date {
+	 background: rgba(255, 182, 193, 0.25); /* rosa bebé, 25% opacidad */
+   	 border-radius: 1em;
+   	 padding: .7em 1.2em;
+   	 display: inline-block;
+   	 color: #fff;
+   	 font-weight: 500;
+	 font-size: 1.1em;
+   	 margin: 1em 0 1.5em 0;
+   	 box-shadow: none;
+	    text-shadow: none;
+	    letter-spacing: 0.04em;
+	}
+
+	/* Centrado para catering/barra libre */
+	.centered-section {
+  	text-align: center;
+  	margin: 2em auto;
+  	max-width: 450px;
+	}
+
+	/* Countdown + mensaje + footer: una sola sección brillante */
+	.final-section {
+  	background: rgba(22, 22, 22, 0.92);
+  	margin: 3em auto 0 auto;
+  	border-radius: 2em;
+  	box-shadow: 0 0 32px 10px #ff49b460;
+  	padding: 2.5em 1em 1.3em 1em;
+  	text-align: center;
+  	max-width: 420px;
+  	position: relative;
+	}
+
+	.countdown-container {
+  	font-size: 2.6em;
+  	font-weight: bold;
+  	margin: 1em 0 .7em 0;
+  	color: #fff;
+  	letter-spacing: 0.08em;
+  	text-shadow: 0 0 18px #fff7, 0 0 26px #e10e805a;
+	}
+
+	.countdown-container span {
+  	display: block;
+  	font-size: 0.35em;
+  	margin-top: -.7em;
+  	font-family: 'Poppins', sans-serif;
+  	font-weight: 400;
+  	letter-spacing: 0.12em;
+  	color: #ff49b4;
+  	opacity: 0.94;
+  	text-shadow: 0 0 8px #fff7a9, 0 0 16px #ff49b499;
+	}
+
+	.te-espero {
+  	font-family: 'Poppins', sans-serif;
+  	font-size: 2.35em;
+  	margin: 1.4em 0 0.9em 0;
+  	background: linear-gradient(92deg, #fff, #ff49b4 48%, #cbb4ff 114%);
+  	color: #ff49b4;
+  	text-transform: uppercase;
+  	font-weight: 700;
+  	letter-spacing: 0.1em;
+  	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
+  	background-clip: text;
+  	text-fill-color: transparent;
+  	text-shadow: 0 0 20px #fff2, 0 0 38px #ff99fa, 1px 1px 0px #c9b1e680;
+  	filter: brightness(1.18) contrast(1.04);
+	}
+
+	.footer-sig {
+  	font-family: 'Poppins', sans-serif;
+  	font-size: 1em;
+  	margin-top: 1.8em;
+  	color: #cccccc;
+  	letter-spacing: 0.07em;
+  	text-shadow: none;
+  	text-align: center;
+	}
+
+	/* Fuerza el centrado en los headings dentro de catering/barra libre */
+	.catering-section h4,
+	.bar-libre h4 {
+    	text-align: center !important;
+    	width: 100%;
+	display: block;
+	}
     </style>
 </head>
 <body>
@@ -786,7 +890,7 @@
         <section class="carousel-section">
             <div class="carousel-container">
                 <div class="carousel-image-container">
-                    <img id="carousel-image" class="carousel-image" src="imagenes/foto1.jpg" alt="Virginia">
+                    <img id="carousel-image" class="carousel-image" src="imagenes/foto1.jpeg" alt="Virginia">
                 </div>
                 <button class="carousel-button prev" onclick="prevPhoto()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -805,8 +909,9 @@
         <section class="event-section">
             <h3>Cena & Boliche</h3>
             <div class="event-details">
-                <p>Sábado 10 de Enero, 2026</p>
-                <p>21:30 hs</p>
+                <div class="neon-date sans">
+  		   Sábado 10 de Enero, 2026 — 21:30 hs
+		</div>
                 <div class="venue-info">
                     <p class="venue-name">Drake Pub & Club</p>
                     <p class="venue-address">Playas del Thompson, Augusto Bravard s/n<br>Paraná, Entre Ríos</p>
@@ -820,16 +925,19 @@
                 </div>
 
                 <div class="catering-section">
-                    <h4>🍴 CATERING</h4>
-                    <p>Papas Drake • Mini burritos • Tacos • Pizzetas • Sándwiches fríos</p>
-                    <p class="small-text">Menú celíaco disponible (avisar antes).</p>
+                    <div class="centered-section">
+			<div class="centered-section">
+		        <h4>🍴 CATERING</h4>
+                        <p>Papas Drake • Mini burritos • Tacos • Pizzetas • Sándwiches fríos</p>
+                        <p class="small-text">Menú celíaco disponible (avisar antes).</p>
 
-                    <div class="bar-libre">
+                        <div class="bar-libre">
                         <h4>🍹 BARRA LIBRE</h4>
                         <p class="horario">De 22:00 hasta las 00:30</p>
                         <p>Fernet • Cerveza • Gancia • Gin • Vodka • Sin alcohol</p>
-                        <p style="text-align: center; margin-top: 0.5rem;">✨ Entrada al boliche incluida ✨</p>
-                    </div>
+                        <p>✨ Entrada al boliche incluida ✨</p>
+                    	</div>
+			</div>
 
                     <div class="precio-section">
                         <h5>VALOR POR PERSONA:</h5>
@@ -845,13 +953,13 @@
             <p class="dresscode-text">TOTAL BLACK</p>
             <div class="dresscode-gallery">
                 <div class="dresscode-image-container">
-                    <img src="imagenes/dresscode1.jpg" alt="Dress code 1" class="dresscode-image">
+                    <img src="imagenes/desscode1.jpg" alt="Dress code 1" class="dresscode-image">
                 </div>
                 <div class="dresscode-image-container">
-                    <img src="imagenes/dresscode2.jpg" alt="Dress code 2" class="dresscode-image">
+                    <img src="imagenes/desscode2.jpg" alt="Dress code 2" class="dresscode-image">
                 </div>
                 <div class="dresscode-image-container">
-                    <img src="imagenes/dresscode3.jpg" alt="Dress code 3" class="dresscode-image">
+                    <img src="imagenes/desscode3.jpg" alt="Dress code 3" class="dresscode-image">
                 </div>
             </div>
         </section>
@@ -879,12 +987,14 @@
                     <div class="countdown-label">MINUTOS</div>
                 </div>
             </div>
+	<div class="te-espero">
+    	    TE ESPERO, NO FALTES!
+  	</div>
         </section>
 
-        <section class="footer-section">
-            <p>Te espero, no faltes!</p>
-            <p class="designer-credit">Designed by Valentina Martínez ✨</p>
-        </section>
+	<footer class="footer-sig">
+    	    Designed by Valentina Martínez ✨
+  	</footer>
     </div>
 
     <audio id="background-music" loop></audio>
@@ -969,18 +1079,18 @@
 
         // PHOTO CAROUSEL
         const photos = [
-            'imagenes/foto1.jpg',
-            'imagenes/foto2.jpg',
-            'imagenes/foto3.jpg',
-            'imagenes/foto4.jpg',
-            'imagenes/foto5.jpg',
-            'imagenes/foto6.jpg',
-            'imagenes/foto7.jpg',
-            'imagenes/foto8.jpg',
-            'imagenes/foto9.jpg',
-            'imagenes/foto10.jpg',
-            'imagenes/foto11.jpg',
-            'imagenes/foto12.jpg'
+            'imagenes/foto1.jpeg',
+            'imagenes/foto2.jpeg',
+            'imagenes/foto3.jpeg',
+            'imagenes/foto4.jpeg',
+            'imagenes/foto5.jpeg',
+            'imagenes/foto6.jpeg',
+            'imagenes/foto7.jpeg',
+            'imagenes/foto8.jpeg',
+            'imagenes/foto9.jpeg',
+            'imagenes/foto10.jpeg',
+            'imagenes/foto11.jpeg',
+            'imagenes/foto12.jpeg'
         ];
 
         let currentPhoto = 0;
